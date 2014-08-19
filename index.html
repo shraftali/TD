@@ -11,39 +11,60 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+            .container {
+                width: 1337px;
+                max-width: 1337px;
+            }
+            svg.main {
+                overflow: hidden;
+                width: 100%;
+            }
+            h1 {
+                text-align: center;
+            }
+            #zoomBtnContainer {
+                text-align: center;
+                position: absolute;
+            }
+            button {
+                background: gray;
+                color: white;
+            }
+            button:hover {
+                background: black;
+                cursor: pointer;
+            }
+        </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="js/jquery.lazylinepainter-1.1.min.js"></script>
+        <script src="js/raphael-min.js"></script>
+        <script src="js/jquery.zoomPanTouchSVG.js"></script>
+
     </head>
     <body>
-        <div id="icons">
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1337px"
+        <div class="container">
+        <div id="svg-container">
+            <svg id="main" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1337px"
                  height="1080px" viewBox="0 0 1337 1080" style="enable-background:new 0 0 1337 1080;" xml:space="preserve">
             <style type="text/css">
             <![CDATA[
-                .st0{fill:none; stroke-dasharray:5; stroke-miterlimit:10}
                 .st1{fill:#FFFFFF;}
             ]]>
             </style>
             <g id="path">
-
-                <path class="st0" d="M654,527c8.082,14.915,17.959,29.778,34.995,35.055c8.647,2.678,20.338,2.37,26.032,10.915
-
-                    c5.485,8.233-3.776,28.304-3.776,28.304s-17.757,34.597-28.005,47.92c-11.633,15.123-30.973,18.12-46.213,27.81
-
-                    c-21.249,13.509-42.199,28.945-52.781,52.29c-3.998,8.82-6.217,18.755-13.254,24.729C557.636,765.366,535.634,775.614,518,770"/>
-
             </g>
 
             <g id="hit">
-
-                <path class="st1" d="M655.5,513.5l-50.5-26l7.5-17.5h38l5-15.5h35L695,494l9.5,0.5l-5,19H655.5z"/>
-
-            </g>>
+                <path class="st1" d="M655.5,513.5l-50.5-26l7.5-17.5h38l5-15.5h35L695,494l9.5,0.5l-5,19H655.5z" /></path>
+            </g>
             </svg>
 
         </div>
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script src="js/jquery.lazylinepainter-1.1.min.js"></script>
-        <script src="js/raphael-min.js"></script>
+        <div id="zoomBtnContainer"></div>
         
         <script src="js/main.js"></script>
     </body>

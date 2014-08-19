@@ -38,5 +38,38 @@ var pathObj = {
             "stroke-miterlimit":10
         }).lazylinepainter('paint');
     })
+
+    $('#main').zoomPanTouchSVG({
+                    zoomBtnContainer: '#zoomBtnContainer'
+                });
+
+                /* 
+                 * bof: fixWebkitHeightBug
+                 * Fix a known bug in WebKit browsers where SVG's height
+                 * is incorrectly calculated
+                 * Credit:  https://gist.github.com/pfulton/4259378
+                 */
+                function fixWebkitHeightBug(){
+                    var svgW = 1337;
+                    var svgH = 1080;
+                    var curSVGW = $('#svg-container').width();
+                    var newSVGH = heightInRatio(svgH,svgW,curSVGW);
+                    $('#svg-container').height(newSVGH);
+                    function heightInRatio(oH,oW,nW){
+                    return (oH / oW * nW);
+                    }
+                };
+                 
+                $(window).resize(function() {
+                    fixWebkitHeightBug();
+                });
+                 
+                $(document).ready(function() {
+                    fixWebkitHeightBug();
+                });
+
+                /*
+                 * eof: fixWebkitHeightBug
+                 */
   
  });

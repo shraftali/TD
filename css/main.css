@@ -65,7 +65,7 @@ body {
     background:#F3B71C; 
 }
 
-#icons {
+#svg-container {
     position: fixed;
     height: 1337px;
     width: 1080px;
