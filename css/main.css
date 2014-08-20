@@ -14,7 +14,29 @@ body {
     font-size: 1em;
     line-height: 1.4;
 }
-
+.container {
+    width: 1337px;
+    max-width: 1337px;
+}
+svg.main {
+    overflow: hidden;
+    width: 100%;
+}
+h1 {
+    text-align: center;
+}
+#zoomBtnContainer {
+    text-align: center;
+    position: absolute;
+}
+button {
+    background: gray;
+    color: white;
+}
+button:hover {
+    background: black;
+    cursor: pointer;
+}
 ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;

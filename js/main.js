@@ -7,7 +7,7 @@
  *  
  */ 
  
-var pathObj = {
+/*var pathObj = {
     "path": {
         "strokepath": [
             {
@@ -21,15 +21,17 @@ var pathObj = {
         }
     }
 }; 
- 
+ */
  
 /* 
  Setup and Paint your lazyline! 
  */ 
- 
- $(document).ready(function(){ 
-    $('#hit').click(function(){
-       $('#path').lazylinepainter( 
+  $(document).ready(function(){ 
+    $("#hit").click(function(){
+    console.log('clicked');
+        $.getJSON("js/data.json",function(result){
+            var pathObj = result;
+            $('#path').lazylinepainter( 
          {
             "svgData": pathObj,
             "strokeWidth": 2 ,
@@ -37,39 +39,10 @@ var pathObj = {
             "stroke-dasharray":5,
             "stroke-miterlimit":10
         }).lazylinepainter('paint');
-    })
-
-    $('#main').zoomPanTouchSVG({
-                    zoomBtnContainer: '#zoomBtnContainer'
-                });
-
-                /* 
-                 * bof: fixWebkitHeightBug
-                 * Fix a known bug in WebKit browsers where SVG's height
-                 * is incorrectly calculated
-                 * Credit:  https://gist.github.com/pfulton/4259378
-                 */
-                function fixWebkitHeightBug(){
-                    var svgW = 1337;
-                    var svgH = 1080;
-                    var curSVGW = $('#svg-container').width();
-                    var newSVGH = heightInRatio(svgH,svgW,curSVGW);
-                    $('#svg-container').height(newSVGH);
-                    function heightInRatio(oH,oW,nW){
-                    return (oH / oW * nW);
-                    }
-                };
-                 
-                $(window).resize(function() {
-                    fixWebkitHeightBug();
-                });
-                 
-                $(document).ready(function() {
-                    fixWebkitHeightBug();
-                });
-
-                /*
-                 * eof: fixWebkitHeightBug
-                 */
+      });
+    });
+    
+    
+    
   
  });
