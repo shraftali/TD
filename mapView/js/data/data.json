@@ -1,0 +1,90 @@
+{
+    "FD408": {
+        "strokepath": [
+            {
+                "path": "M740.404,198.668c0,0,86.542-11.729,72.055,63.885",
+                "duration": 1000
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "FD404": {
+        "strokepath": [
+            {
+                "path": "M738.167,198.457c0,0-52.694-6.333-41.764,34.939",
+                "duration": 1000
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "FD475": {
+        "strokepath": [
+            {
+                "path": "M708.057,190.611c0,0-274.866,37.042-267.961,167.715",
+                "duration": 1000
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "RW405": {
+        "strokepath": [
+            {
+                "path": "M734.167,198.457c0,0-48.694-6.333-37.764,34.939",
+                "duration": 1000,
+                "strokeCap": "square"
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "RW405A": {
+        "strokepath": [
+            {
+                "path": "M734.5,198.457c0,0-84.732-6.277-70.449,42.55",
+                "duration": 1000,
+                "strokeCap": "square"
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "RW404": {
+        "strokepath": [
+            {
+                "path": "M738.553,198.194c0,0,38.469,8.212,23,45.323",
+                "duration": 1000
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    },
+    "RW404A": {
+        "strokepath": [
+            {
+                "path": "M739.099,198.194c0,0-9.756,8.477-9.878,35.529",
+                "duration": 1000,
+                "strokeCap": "square"
+            }
+        ],
+        "dimensions": {
+            "width": 1224, 
+            "height": 792
+        }
+    }
+
+}

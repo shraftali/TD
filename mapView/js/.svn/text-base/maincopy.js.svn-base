@@ -1,0 +1,43 @@
+$(document).ready(function(){
+
+  // init();
+  // //Call json and Initiate the DrawPath
+  $.getJSON('js/data/data.json', function(result) {
+     $('.g-spot').DrawPath({'data' : result });
+  });
+
+  // $(".hit").on("click touchstart", function(e){
+  //   var path = $(this).parent('g').attr('relPath');
+
+  //     $("#svg-container").panzoom('zoom', {
+  //       increment: -1.5,
+  //       animate: true,
+  //       duration: 400,
+  //       focal: {
+  //         clientX: $("#Layer_2").position().left,
+  //         clientY: $("#Layer_2").position().top
+  //       }
+  //     });
+  //   });
+
+  //   console.log("container size: ", $("#svg-container").width(), $("#svg-container").height("1338"));
+});
+
+function init(){
+  // initialize the panzoom
+  $("#svg-container").panzoom({
+    duration: 400,
+  });
+  console.log("you are here: ", $("#Layer_2").position().top);
+
+  // zoom in on the you are here
+  $("#svg-container").panzoom('zoom', {
+    increment: 2,
+    animate: true,
+    focal: {
+      clientX: $("#Layer_2").position().left,
+      clientY: $("#Layer_2").position().top
+    }
+  });
+}
+

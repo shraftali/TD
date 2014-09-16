@@ -1,0 +1,44 @@
+/**
+ * Description: Short description.
+ * Version: 1.0.0
+ * Last update: 2014/09/10
+ * Author: Nitin Tyagi <ntyagi2@sapient.com>
+ *
+ */
+
+/*--------- Setting up Initial Wrap width/height -------*/
+.container {
+    width: 1337px;
+    max-width: 1337px;
+}
+
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+#svg-container {
+    position: fixed;
+    height: 1338px;
+    width: 1080px;
+-webkit-backface-visibility: initial !important;/* Fix for Chrome PX issue */
+-webkit-transform-origin: 50% 50%;/* Fix for Chrome PX issue */
+}
+
+.panzoom {
+    position: absolute;
+    text-align: center;
+}
+
+.control-panel {
+    background-color:#FFF;
+    position: absolute;
+    z-index:20;
+    border: 3px solid black;
+    width: 46%;
+    height: 25%;
+    bottom: 0;
+}

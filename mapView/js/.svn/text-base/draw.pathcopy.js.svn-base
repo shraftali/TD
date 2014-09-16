@@ -1,0 +1,230 @@
+
+(function ( $, window, document, undefined ) {
+
+
+    var pluginName = 'DrawPath',
+        defaults = {
+          data : {},
+          selectors : {
+            btn : '.hit'
+          },
+          dimSpace : '0.5',
+          noDimSpace : "1",
+          events : {
+            'selectedSpaceIDEvent' : 'selectedSpace.mapChart',
+            'changedSpaceIDEvent' : 'changedSpace.ControlPannel',
+            'filterdSpaceIDEvent' : 'filterdSpace.mapChart',
+            'clearFilteredSpaceIDEvent' : 'clearFilteredSpace.mapChart'
+          },
+          cache : {
+            'hitTarget' : {}
+          },
+          active : true
+        };
+
+
+    // The actual plugin constructor
+    function mapChart( element, options ) {
+        this.element = element;
+        this.options = $.extend( true, {}, defaults, options) ;
+        this.$el = $(element);
+        this.spaceId = this.$el.attr('id');
+        this._defaults = defaults;
+        this._name = pluginName;
+
+        this.init();
+
+    }
+
+    mapChart.prototype.init = function () {
+		this.options.cache.hitTarget = this.$el.find(this.options.selectors.btn);
+ 		this.attachEvents();
+
+    console.log("init");
+        // initialize the panzoom with options.
+        $("#svg-container").panzoom({
+          duration: 400
+        });
+
+
+
+        // zoom in on the you are here
+        $("#svg-container").panzoom('zoom', {
+          increment: 2,
+          animate: true,
+          focal: {
+            clientX: $("#Layer_2").position().left,
+            clientY: $("#Layer_2").position().top
+          },
+
+        });
+
+
+
+        console.log("increment after initial zoom: ", $("#svg-container").panzoom("option", "increment"));
+    };
+
+    mapChart.prototype.attachEvents = function(){
+ 		var that = this;
+ 		this.options.cache.hitTarget.on('click', function(e){
+ 			e.preventDefault();
+	        that.clickCapture();
+	    });
+
+      // Called on Window trigger to animate path
+      $(window).on(this.options.events.changedSpaceIDEvent, function(e, vendorID){
+          if (that.spaceId === vendorID){
+            that.animPath(vendorID);
+          }
+          else{
+            that.erasePath(vendorID);
+          }
+      });
+
+      // Call the Erase Path Function on Windows event
+       $(window).on(this.options.events.selectedSpaceIDEvent, function(e, vendorID){
+          that.erasePath(vendorID); 
+      });
+       // Filter Space
+       $(window).on(this.options.events.filterdSpaceIDEvent, function(e, vendorID){
+        var i, len = vendorID.data.length;
+        that.options.active = false;
+        for (i = 0; i<len; i++){
+          if (vendorID.data[i] === that.spaceId){
+            that.options.active = true;
+            that.makeActive();
+          }
+        } 
+        // if not found
+        if (that.options.active === false){
+          that.makeInactive();
+        }
+       });
+
+       // Clear Filters
+       $(window).on(this.options.events.clearFilteredSpaceIDEvent, function(e){
+        that.options.active = true;
+        that.options.cache.hitTarget.css({
+          opacity: that.options.noDimSpace
+        });
+
+       });
+
+ 	}
+  //Used with Filtered Space
+  mapChart.prototype.makeInactive = function(){
+    console.log('inside makeInactive')
+    this.options.cache.hitTarget.css({
+            opacity: this.options.dimSpace
+          });
+  };
+  mapChart.prototype.makeActive = function(){
+    console.log('inside makeActive');
+    this.options.cache.hitTarget.css({
+            opacity: this.options.noDimSpace
+          });
+  };
+  // Capture Click
+	mapChart.prototype.clickCapture = function() {
+    if (this.options.active === true){
+      this.animPath(this.spaceId);
+      this.callContPanel(); 
+    }
+  };
+
+	// Animate Path
+  mapChart.prototype.animPath = function(SpaceID){
+     	$("#"+SpaceID).lazylinepainter({
+  			"svgData": this.options.data,
+  			"strokeWidth": 2 ,
+  			"strokeColor": "orange",
+  			"stroke-dasharray":5,
+  			"stroke-miterlimit":10
+  		}).lazylinepainter('paint');
+
+      this.handleZoom(SpaceID);
+   };
+
+  //Erase Path   
+  mapChart.prototype.erasePath = function(vendorID){
+      console.log('in erasePath');
+      
+      if (this.spaceId !== vendorID){
+          //$('#'+that.spaceId).lazylinepainter('erase');
+          $('#'+this.spaceId).children('svg').empty();
+      }
+  }
+
+	mapChart.prototype.callContPanel = function(){
+   $(window).trigger(this.options.events.selectedSpaceIDEvent, this.spaceId);
+  };
+
+  // handleZoom Functionality
+  mapChart.prototype.handleZoom = function(spaceID){
+    var buffer = 50;
+    // zoom increment
+    var z = $("#svg-container").panzoom("option", "increment");
+    // get spaceID x and y
+    // x
+    var x = Math.ceil($("#"+spaceID).position().top);
+    // y
+    var y = Math.ceil($("#"+spaceID).position().left);
+    console.log(x, y);
+
+    // width (change in x)
+    var w = (x * z ) + (buffer * 2);
+
+    // height (change in y)
+    var h = (y * z ) + (buffer * 2);
+
+    // width ratio
+    var wR = (w / x);
+
+    // height ratio
+    var hR = (h / y);
+
+    console.log("wr: ", wR);
+    console.log("hr: ", hR);
+
+    // new zoom increment
+    var nZ = (z - wR) * 10;
+    console.log("nz: ", nZ);
+
+    //do the zoom!
+    $("#svg-container").panzoom('zoom', {
+      increment: nZ,
+      animate: true,
+      duration: 400,
+      focal: {
+        clientX: w / 2,
+        clientY: h / 2
+      },
+      silent: true
+    });
+
+
+    // pan the screen appropriately
+    $("#svg-container").panzoom("pan", x, y, { relative: false, animate: true });
+
+    // $("#svg-container").panzoom("resetDimensions");
+
+  };
+
+    $.fn[pluginName] = function ( options ) {
+        return this.each(function () {
+            if (!$.data(this, 'plugin_' + pluginName)) {
+                $.data(this, 'plugin_' + pluginName,
+                new mapChart( this, options ));
+            }
+        });
+    }
+
+})( jQuery, window, document );
+//Get the spaceID
+//$(window).on('changedSpace.ControlPannel', function(e, spaceid){ console.log(e, spaceid)});
+//Trigger the path
+//$(window).trigger('changedSpace.ControlPannel', 'path_1');
+//Trigger Filters
+//$(window).trigger("filterdSpace.mapChart", [{data: ['path_2', 'path_3']}])
+//Trigger Clear Filters
+//$(window).trigger("clearFilteredSpace.mapChart")

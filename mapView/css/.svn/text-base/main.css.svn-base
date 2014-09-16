@@ -11,7 +11,6 @@
     padding: 0.2em 0;
 }
 
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
@@ -19,8 +18,26 @@
 
 #svg-container {
     position: fixed;
-    height: 1337px;
+    height: 1338px;
     width: 1080px;
 
 }
+#svg-container {
+-webkit-backface-visibility: initial !important;
+-webkit-transform-origin: 50% 50%;
+}
 
+.panzoom {
+    position: absolute;
+    text-align: center;
+}
+
+.control-panel {
+    background-color:#FFF;
+    position: absolute;
+    z-index:20;
+    border: 3px solid black;
+    width: 46%;
+    height: 65%;
+    bottom: 0;
+}
